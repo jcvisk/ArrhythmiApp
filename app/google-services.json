@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "952326540015",
+    "project_id": "arrhythmiapp",
+    "storage_bucket": "arrhythmiapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:952326540015:android:9cb4033b443590a835a91a",
+        "android_client_info": {
+          "package_name": "com.iunis.arrhythmiapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "952326540015-gqbvvfhl3hksjmmmqf64i078h3lpj300.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iunis.arrhythmiapp",
+            "certificate_hash": "a3213d73eb324a344fcee604299b90a0bf4f4080"
+          }
+        },
+        {
+          "client_id": "952326540015-s582f4taut0hckd2442cakbuvvaa25ev.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQoeEsi2iTXTo16Qp_2irG4vgSXCraDCY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "952326540015-s582f4taut0hckd2442cakbuvvaa25ev.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
