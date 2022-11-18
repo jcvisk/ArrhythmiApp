@@ -15,8 +15,10 @@ class FirebaseLoginUseCase @Inject constructor(
         val loggedSuccessfully = authRepository.login(email, password)
         if (loggedSuccessfully){
             emit(Resource.Success(true))
+            emit(Resource.Finished)
         }else{
             emit(Resource.Error("Login Error"))
+            emit(Resource.Finished)
         }
     }
 }
