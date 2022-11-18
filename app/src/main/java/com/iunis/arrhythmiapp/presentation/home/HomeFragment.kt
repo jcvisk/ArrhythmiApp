@@ -5,8 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.navArgs
-import com.iunis.arrhythmiapp.R
 import com.iunis.arrhythmiapp.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,8 +31,40 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.tvHome.text = "Bienvenido ${args.uid}"
+        initListeners()
     }
+
+    private fun initListeners() {
+        with(binding) {
+            bAddNote.setOnClickListener { showAddNoteDialog() }
+
+        }
+    }
+
+    private fun showAddNoteDialog() {
+        val addDataDialog = AddDataDialog()
+        addDataDialog.setOnAddNoteClickListener {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        }
+        addDataDialog.show(parentFragmentManager, "add_note_dialog")
+    }
+
+    private fun showDeleteNoteDialog() {
+        val alertDialog = AlertDialog.Builder(requireContext())
+        alertDialog.setTitle("Eliminar nota")
+        alertDialog.setMessage("Se eliminará  esta nota definitivamente")
+
+        alertDialog.setPositiveButton(android.R.string.yes) { dialog, which ->
+            Toast.makeText(requireContext(), android.R.string.yes, Toast.LENGTH_SHORT).show()
+        }
+
+        alertDialog.setNegativeButton(android.R.string.no) { dialog, which ->
+            Toast.makeText(requireContext(),
+                android.R.string.no, Toast.LENGTH_SHORT).show()
+        }
+        alertDialog.show()
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
