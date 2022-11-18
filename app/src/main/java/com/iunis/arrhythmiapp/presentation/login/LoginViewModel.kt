@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.iunis.arrhythmiapp.domain.model.User
 import com.iunis.arrhythmiapp.domain.usecase.FirebaseLoginUseCase
 import com.iunis.arrhythmiapp.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,8 +17,8 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(private val loginUseCase: FirebaseLoginUseCase):
     ViewModel() {
 
-    private val _loginState: MutableLiveData<Resource<Boolean>> = MutableLiveData()
-    val loginState: LiveData<Resource<Boolean>>
+    private val _loginState: MutableLiveData<Resource<User>> = MutableLiveData()
+    val loginState: LiveData<Resource<User>>
         get() = _loginState
 
     fun login(email:String, password:String){

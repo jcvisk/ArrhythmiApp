@@ -1,4 +1,4 @@
-package com.iunis.arrhythmiapp.presentation.login
+package com.iunis.arrhythmiapp.presentation.password_recovery
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,24 +9,25 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.iunis.arrhythmiapp.R
-import com.iunis.arrhythmiapp.databinding.FragmentLoginBinding
+import com.iunis.arrhythmiapp.databinding.FragmentPasswordRecoveryBinding
+import com.iunis.arrhythmiapp.presentation.login.LoginFragmentDirections
 import com.iunis.arrhythmiapp.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginFragment : Fragment() {
+class PasswordRecoveryFragment : Fragment() {
 
-    private var _binding: FragmentLoginBinding? = null
+    private var _binding: FragmentPasswordRecoveryBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: LoginViewModel by viewModels()
+    private val viewModel: PasswordRecoveryViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        _binding = FragmentPasswordRecoveryBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -38,12 +39,12 @@ class LoginFragment : Fragment() {
     }
 
     private fun initObservers() {
-        viewModel.loginState.observe(viewLifecycleOwner){ state ->
+        viewModel.passwordSend.observe(viewLifecycleOwner){ state ->
             when(state){
                 is Resource.Success -> {
                     handleLoading(isLoading = false)
-                    val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment(uid = state.data.uid)
-                    findNavController().navigate(action)
+                    activity?.onBackPressed()
+                    Toast.makeText(requireContext(),"Se ha enviado un link a tu correo electrónico para reestablecer tu contraseña", Toast.LENGTH_LONG).show()
                 }
                 is Resource.Error -> {
                     handleLoading(isLoading = false)
@@ -55,38 +56,33 @@ class LoginFragment : Fragment() {
         }
     }
 
-    //Navegando del Fragment Login al Fragment Sign Up
     private fun initListeners() {
         with(binding){
-            bLogin.setOnClickListener {
-                handleLogin()
+            bBack.setOnClickListener {
+                activity?.onBackPressed()
             }
-            bSignUp.setOnClickListener {
-                findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
-            }
-            bPasswordRecovery.setOnClickListener {
-                findNavController().navigate(R.id.action_loginFragment_to_passwordRecoveryFragment)
+            bRecoverPassword.setOnClickListener {
+                handlePasswordRecovery()
             }
         }
     }
 
-    private fun handleLogin() {
+    private fun handlePasswordRecovery() {
         val email = binding.etEmail.text.toString()
-        val password = binding.etPassword.text.toString()
 
-        viewModel.login(email, password)
+        viewModel.sendPasswordLink(email)
     }
 
     private fun handleLoading(isLoading:Boolean){
         with(binding){
             if (isLoading){
-                bLogin.text = ""
-                bLogin.isEnabled = false
-                pbLogin.visibility = View.VISIBLE
+                bRecoverPassword.text = ""
+                bRecoverPassword.isEnabled = false
+                pbRecoverPassword.visibility = View.VISIBLE
             }else{
-                pbLogin.visibility = View.GONE
-                bLogin.text = getString(R.string.login__login_button)
-                bLogin.isEnabled = true
+                pbRecoverPassword.visibility = View.GONE
+                bRecoverPassword.text = getString(R.string.login__password_recovery_button)
+                bRecoverPassword.isEnabled = true
             }
         }
     }

@@ -59,6 +59,9 @@ class SignUpFragment : Fragment() {
             bSignUp.setOnClickListener {
                 handleSignUp()
             }
+            bBack.setOnClickListener {
+                activity?.onBackPressed()
+            }
         }
     }
 
