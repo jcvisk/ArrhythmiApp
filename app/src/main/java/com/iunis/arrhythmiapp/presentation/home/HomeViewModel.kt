@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.iunis.arrhythmiapp.domain.model.HeartData
 import com.iunis.arrhythmiapp.domain.usecase.FirebaseAddHeartDataUseCase
 import com.iunis.arrhythmiapp.domain.usecase.FirebaseDeleteHeartDataUseCase
+import com.iunis.arrhythmiapp.domain.usecase.FirebaseGetAllHeartDataRealTimeUseCase
 import com.iunis.arrhythmiapp.domain.usecase.FirebaseGetAllHeartDataUseCase
 import com.iunis.arrhythmiapp.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +20,8 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val addHeartDataUseCase: FirebaseAddHeartDataUseCase,
     private val deleteHeartDataUseCase: FirebaseDeleteHeartDataUseCase,
-    private val getAllHeartDataUseCase: FirebaseGetAllHeartDataUseCase
+    private val getAllHeartDataUseCase: FirebaseGetAllHeartDataUseCase,
+    private val getAllHeartDataRealTimeUseCase: FirebaseGetAllHeartDataRealTimeUseCase
 ): ViewModel(){
 
     private val _heartDataListState: MutableLiveData<Resource<List<HeartData>>> = MutableLiveData()
@@ -36,7 +38,7 @@ class HomeViewModel @Inject constructor(
 
     fun getAllHeartData(){
         viewModelScope.launch {
-            getAllHeartDataUseCase().onEach {
+            getAllHeartDataRealTimeUseCase().onEach {
                 _heartDataListState.value = it
             }.launchIn(viewModelScope)
         }

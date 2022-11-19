@@ -46,14 +46,14 @@ class HomeFragment : Fragment() {
     private fun initObservers() {
         viewModel.addHeartDataState.observe(viewLifecycleOwner){ state ->
             when(state){
-                is Resource.Success -> getHeartData()
+                is Resource.Success -> Unit
                 is Resource.Error -> Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
                 else -> Unit
             }
         }
         viewModel.deleteHeartDataState.observe(viewLifecycleOwner){ state ->
             when(state){
-                is Resource.Success -> getHeartData()
+                is Resource.Success -> Unit
                 is Resource.Error -> Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
                 else -> Unit
             }
