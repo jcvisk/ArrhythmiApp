@@ -10,6 +10,7 @@ import androidx.fragment.app.DialogFragment
 import com.iunis.arrhythmiapp.databinding.DialogAddHeartDataBinding
 
 class AddHeartDataDialog() : DialogFragment() {
+
     private lateinit var binding : DialogAddHeartDataBinding
     private var onSubmitClickListener: ((String) -> Unit)? = null
 
@@ -19,8 +20,8 @@ class AddHeartDataDialog() : DialogFragment() {
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
 
-        binding.bAddNote.setOnClickListener {
-            //onSubmitClickListener?.invoke(binding.etNote.text.toString())
+        binding.bAddHeartData.setOnClickListener {
+            onSubmitClickListener?.invoke(binding.etNote.text.toString())
             dismiss()
         }
 

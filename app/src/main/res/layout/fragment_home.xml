@@ -22,7 +22,7 @@
             android:paddingVertical="16dp">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvNotes"
+                android:id="@+id/rvHeartData"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -40,7 +40,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/bAddNote"
+        android:id="@+id/bAddHeartData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"

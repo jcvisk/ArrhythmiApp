@@ -7,8 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.iunis.arrhythmiapp.databinding.FragmentHomeBinding
+import com.iunis.arrhythmiapp.domain.model.HeartData
+import com.iunis.arrhythmiapp.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,7 +20,9 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
+    private val viewModel: HomeViewModel by viewModels()
     private val args: HomeFragmentArgs by navArgs()
+    private val heartDataListAdapter: HeartDataListAdapter = HeartDataListAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,31 +36,75 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initListComponent()
         initListeners()
+        initObservers()
+
+        getHeartData()
+    }
+
+    private fun initObservers() {
+        viewModel.addHeartDataState.observe(viewLifecycleOwner){ state ->
+            when(state){
+                is Resource.Success -> getHeartData()
+                is Resource.Error -> Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                else -> Unit
+            }
+        }
+        viewModel.deleteHeartDataState.observe(viewLifecycleOwner){ state ->
+            when(state){
+                is Resource.Success -> getHeartData()
+                is Resource.Error -> Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                else -> Unit
+            }
+        }
+        viewModel.heartDataListState.observe(viewLifecycleOwner){ state ->
+            when(state){
+                is Resource.Success -> heartDataListAdapter.submitList(state.data)
+                is Resource.Error -> Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                else -> Unit
+            }
+        }
+    }
+
+    private fun getHeartData() {
+        viewModel.getAllHeartData()
+    }
+
+    private fun initListComponent() {
+        binding.rvHeartData.apply {
+            adapter = heartDataListAdapter
+        }
     }
 
     private fun initListeners() {
         with(binding) {
-            bAddNote.setOnClickListener { showAddNoteDialog() }
-
+            bAddHeartData.setOnClickListener { showAddHeartDataDialog() }
+            heartDataListAdapter.setHeartDataClickListener { showDeleteHeartDataDialog(it) }
         }
     }
 
-    private fun showAddNoteDialog() {
+    private fun showAddHeartDataDialog() {
         val addHeartDataDialog = AddHeartDataDialog()
         addHeartDataDialog.setOnAddNoteClickListener {
-            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            viewModel.saveHeartData(HeartData(
+                systolic = null,
+                diastolic = null,
+                pulse = null,
+                note = it,
+                date = ""
+            ))
         }
         addHeartDataDialog.show(parentFragmentManager, "add_note_dialog")
     }
 
-    private fun showDeleteNoteDialog() {
+    private fun showDeleteHeartDataDialog(heartData: HeartData) {
         val alertDialog = AlertDialog.Builder(requireContext())
         alertDialog.setTitle("Eliminar nota")
         alertDialog.setMessage("Se eliminará  esta nota definitivamente")
 
         alertDialog.setPositiveButton(android.R.string.yes) { dialog, which ->
-            Toast.makeText(requireContext(), android.R.string.yes, Toast.LENGTH_SHORT).show()
+            viewModel.deleteHeartData(heartData)
         }
 
         alertDialog.setNegativeButton(android.R.string.no) { dialog, which ->
