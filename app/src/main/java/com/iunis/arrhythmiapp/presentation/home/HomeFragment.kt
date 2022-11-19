@@ -88,11 +88,11 @@ class HomeFragment : Fragment() {
         val addHeartDataDialog = AddHeartDataDialog()
         addHeartDataDialog.setOnAddNoteClickListener {
             viewModel.saveHeartData(HeartData(
-                systolic = null,
-                diastolic = null,
-                pulse = null,
-                note = it,
-                date = ""
+                systolic = it.systolic,
+                diastolic = it.diastolic,
+                pulse = it.pulse,
+                note = it.note,
+                date = it.date
             ))
         }
         addHeartDataDialog.show(parentFragmentManager, "add_note_dialog")
