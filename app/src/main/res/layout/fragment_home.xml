@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_datos"
+                tools:listitem="@layout/item_heart_data"
                 tools:itemCount="24"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

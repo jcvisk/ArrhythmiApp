@@ -42,11 +42,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun showAddNoteDialog() {
-        val addDataDialog = AddDataDialog()
-        addDataDialog.setOnAddNoteClickListener {
+        val addHeartDataDialog = AddHeartDataDialog()
+        addHeartDataDialog.setOnAddNoteClickListener {
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
-        addDataDialog.show(parentFragmentManager, "add_note_dialog")
+        addHeartDataDialog.show(parentFragmentManager, "add_note_dialog")
     }
 
     private fun showDeleteNoteDialog() {

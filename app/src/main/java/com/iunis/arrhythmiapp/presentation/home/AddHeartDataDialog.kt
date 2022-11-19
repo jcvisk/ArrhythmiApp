@@ -7,14 +7,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import com.iunis.arrhythmiapp.databinding.DialogAddNoteBinding
+import com.iunis.arrhythmiapp.databinding.DialogAddHeartDataBinding
 
-class AddDataDialog() : DialogFragment() {
-    private lateinit var binding : DialogAddNoteBinding
+class AddHeartDataDialog() : DialogFragment() {
+    private lateinit var binding : DialogAddHeartDataBinding
     private var onSubmitClickListener: ((String) -> Unit)? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        binding = DialogAddNoteBinding.inflate(LayoutInflater.from(context))
+        binding = DialogAddHeartDataBinding.inflate(LayoutInflater.from(context))
 
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
