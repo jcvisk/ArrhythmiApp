@@ -100,17 +100,17 @@ class HomeFragment : Fragment() {
 
     private fun showDeleteHeartDataDialog(heartData: HeartData) {
         val alertDialog = AlertDialog.Builder(requireContext())
-        alertDialog.setTitle("Eliminar nota")
-        alertDialog.setMessage("Se eliminará  esta nota definitivamente")
+        alertDialog.setTitle("Eliminar datos")
+        alertDialog.setMessage("Se eliminarán estos datos definitivamente")
 
         alertDialog.setPositiveButton(android.R.string.yes) { dialog, which ->
             viewModel.deleteHeartData(heartData)
         }
 
-        alertDialog.setNegativeButton(android.R.string.no) { dialog, which ->
+        /*alertDialog.setNegativeButton(android.R.string.no) { dialog, which ->
             Toast.makeText(requireContext(),
                 android.R.string.no, Toast.LENGTH_SHORT).show()
-        }
+        }*/
         alertDialog.show()
     }
 
