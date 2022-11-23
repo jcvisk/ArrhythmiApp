@@ -30,6 +30,6 @@ class DetailedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.tvTest.text = args.itemHeartData.note
+        binding.tvTest.text = args.itemHeartData.fecha.toString()
     }
 }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.iunis.arrhythmiapp.databinding.FragmentHomeBinding
@@ -77,8 +78,15 @@ class HomeFragment : Fragment() {
 
     private fun initListeners() {
         with(binding) {
-            bAddHeartData.setOnClickListener { showAddHeartDataDialog() }
-            heartDataListAdapter.setHeartDataClickListener { showDeleteHeartDataDialog(it) }
+            bAddHeartData.setOnClickListener {
+                showAddHeartDataDialog()
+            }
+            heartDataListAdapter.setHeartDataClickListener {
+                goToDetailedHeartDataFragment(it)
+            }
+            heartDataListAdapter.setHeartDataLongClickListener {
+                showDeleteHeartDataDialog(it)
+            }
         }
     }
 
@@ -90,16 +98,14 @@ class HomeFragment : Fragment() {
                 diastolic = it.diastolic,
                 pulse = it.pulse,
                 note = it.note,
-                date = it.date
+                fecha = it.fecha
             ))
         }
         addHeartDataDialog.show(parentFragmentManager, "add_note_dialog")
     }
 
     private fun showDeleteHeartDataDialog(heartData: HeartData) {
-        val action = HomeFragmentDirections.actionHomeFragmentToDetailedFragment(itemHeartData = heartData)
-        findNavController().navigate(action)
-        /*val alertDialog = AlertDialog.Builder(requireContext())
+        val alertDialog = AlertDialog.Builder(requireContext())
         alertDialog.setTitle("Eliminar datos")
         alertDialog.setMessage("Se eliminarán estos datos definitivamente")
 
@@ -107,11 +113,16 @@ class HomeFragment : Fragment() {
             viewModel.deleteHeartData(heartData)
         }
 
-        *//*alertDialog.setNegativeButton(android.R.string.no) { dialog, which ->
+        alertDialog.setNegativeButton(android.R.string.no) { dialog, which ->
             Toast.makeText(requireContext(),
                 android.R.string.no, Toast.LENGTH_SHORT).show()
-        }*//*
-        alertDialog.show()*/
+        }
+        alertDialog.show()
+    }
+
+    private fun goToDetailedHeartDataFragment(heartData: HeartData) {
+        val action = HomeFragmentDirections.actionHomeFragmentToDetailedFragment(itemHeartData = heartData)
+        findNavController().navigate(action)
     }
 
 

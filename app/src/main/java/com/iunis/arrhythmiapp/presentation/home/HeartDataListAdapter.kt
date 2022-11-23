@@ -38,20 +38,33 @@ class HeartDataListAdapter: ListAdapter<HeartData, HeartDataListAdapter.HeartDat
         holder.binding.tvSystolic.text = heartData.systolic.toString()
         holder.binding.tvDiastolic.text = heartData.diastolic.toString()
         holder.binding.tvPulse.text = heartData.pulse.toString()
-        holder.binding.tvDate.text = heartData.date
+        holder.binding.tvDate.text = heartData.fecha.toString()
 
         holder.itemView.apply {
+
             setOnClickListener {
                 onHeartDataClickListener?.let { click ->
                     click(heartData)
                 }
             }
+
+            setOnLongClickListener {
+                onHeartDataLongClickListener?.let { click ->
+                    click(heartData)
+                }
+                true
+            }
         }
     }
 
     protected var onHeartDataClickListener: ((HeartData) -> Unit)? = null
+    protected var onHeartDataLongClickListener: ((HeartData) -> Unit)? = null
 
     fun setHeartDataClickListener(listener: (HeartData) -> Unit){
         onHeartDataClickListener = listener
+    }
+
+    fun setHeartDataLongClickListener(listener: (HeartData) -> Unit){
+        onHeartDataLongClickListener = listener
     }
 }
