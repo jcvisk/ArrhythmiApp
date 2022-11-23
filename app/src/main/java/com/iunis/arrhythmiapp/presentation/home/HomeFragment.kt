@@ -113,10 +113,10 @@ class HomeFragment : Fragment() {
             viewModel.deleteHeartData(heartData)
         }
 
-        alertDialog.setNegativeButton(android.R.string.no) { dialog, which ->
+        /*alertDialog.setNegativeButton(android.R.string.no) { dialog, which ->
             Toast.makeText(requireContext(),
                 android.R.string.no, Toast.LENGTH_SHORT).show()
-        }
+        }*/
         alertDialog.show()
     }
 

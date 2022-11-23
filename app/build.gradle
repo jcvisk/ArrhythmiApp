@@ -86,6 +86,9 @@ dependencies {
 
     //Coroutines - Firebase
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.4.1'
+
+    implementation 'com.github.Gruzer:simple-gauge-android:0.3.1'
+
 }
 
 kapt {

@@ -38,7 +38,7 @@ class HeartDataListAdapter: ListAdapter<HeartData, HeartDataListAdapter.HeartDat
         holder.binding.tvSystolic.text = heartData.systolic.toString()
         holder.binding.tvDiastolic.text = heartData.diastolic.toString()
         holder.binding.tvPulse.text = heartData.pulse.toString()
-        holder.binding.tvDate.text = heartData.fecha.toString()
+        holder.binding.tvDate.text = heartData.fecha?.toDate().toString()
 
         holder.itemView.apply {
 
