@@ -42,7 +42,7 @@ class LoginFragment : Fragment() {
             when(state){
                 is Resource.Success -> {
                     handleLoading(isLoading = false)
-                    val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment(uid = state.data.uid)
+                    val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
                     findNavController().navigate(action)
                 }
                 is Resource.Error -> {

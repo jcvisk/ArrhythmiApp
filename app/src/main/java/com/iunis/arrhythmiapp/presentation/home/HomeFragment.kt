@@ -6,9 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
+import androidx.navigation.fragment.findNavController
 import com.iunis.arrhythmiapp.databinding.FragmentHomeBinding
 import com.iunis.arrhythmiapp.domain.model.HeartData
 import com.iunis.arrhythmiapp.util.Resource
@@ -21,7 +20,6 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: HomeViewModel by viewModels()
-    private val args: HomeFragmentArgs by navArgs()
     private val heartDataListAdapter: HeartDataListAdapter = HeartDataListAdapter()
 
     override fun onCreateView(
@@ -99,7 +97,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun showDeleteHeartDataDialog(heartData: HeartData) {
-        val alertDialog = AlertDialog.Builder(requireContext())
+        val action = HomeFragmentDirections.actionHomeFragmentToDetailedFragment(itemHeartData = heartData)
+        findNavController().navigate(action)
+        /*val alertDialog = AlertDialog.Builder(requireContext())
         alertDialog.setTitle("Eliminar datos")
         alertDialog.setMessage("Se eliminarán estos datos definitivamente")
 
@@ -107,11 +107,11 @@ class HomeFragment : Fragment() {
             viewModel.deleteHeartData(heartData)
         }
 
-        /*alertDialog.setNegativeButton(android.R.string.no) { dialog, which ->
+        *//*alertDialog.setNegativeButton(android.R.string.no) { dialog, which ->
             Toast.makeText(requireContext(),
                 android.R.string.no, Toast.LENGTH_SHORT).show()
-        }*/
-        alertDialog.show()
+        }*//*
+        alertDialog.show()*/
     }
 
 

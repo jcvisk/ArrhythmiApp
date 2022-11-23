@@ -17,4 +17,6 @@
     <string name="home__systolic_text">Sistólica</string>
     <string name="home__diastolic_text">Diastólica</string>
     <string name="home__pulse_text">Pulso</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

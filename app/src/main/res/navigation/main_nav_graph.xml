@@ -31,10 +31,9 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
 
-        <argument
-            android:name="uid"
-            app:nullable="false"
-            app:argType="string" />
+        <action
+            android:id="@+id/action_homeFragment_to_detailedFragment"
+            app:destination="@id/detailedFragment" />
 
     </fragment>
     <fragment
@@ -42,4 +41,15 @@
         android:name="com.iunis.arrhythmiapp.presentation.password_recovery.PasswordRecoveryFragment"
         android:label="fragment_password_recovery"
         tools:layout="@layout/fragment_password_recovery" />
+    <fragment
+        android:id="@+id/detailedFragment"
+        android:name="com.iunis.arrhythmiapp.presentation.detailed.DetailedFragment"
+        android:label="fragment_detailed"
+        tools:layout="@layout/fragment_detailed">
+
+        <argument
+            android:name="itemHeartData"
+            app:argType="com.iunis.arrhythmiapp.domain.model.HeartData"
+            app:nullable="false"/>
+    </fragment>
 </navigation>
