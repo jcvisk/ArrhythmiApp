@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_homeFragment_to_detailedFragment"
             app:destination="@id/detailedFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_heartDataChartFragment"
+            app:destination="@id/heartDataChartFragment" />
 
     </fragment>
     <fragment
@@ -52,4 +55,9 @@
             app:argType="com.iunis.arrhythmiapp.domain.model.HeartData"
             app:nullable="false"/>
     </fragment>
+    <fragment
+        android:id="@+id/heartDataChartFragment"
+        android:name="com.iunis.arrhythmiapp.presentation.chart.HeartDataChartFragment"
+        android:label="fragment_heart_data_chart"
+        tools:layout="@layout/fragment_heart_data_chart" />
 </navigation>

@@ -87,6 +87,9 @@ class HomeFragment : Fragment() {
             heartDataListAdapter.setHeartDataLongClickListener {
                 showDeleteHeartDataDialog(it)
             }
+            bShowChart.setOnClickListener {
+                goToHeartDataChartFragment()
+            }
         }
     }
 
@@ -125,6 +128,10 @@ class HomeFragment : Fragment() {
         findNavController().navigate(action)
     }
 
+    private fun goToHeartDataChartFragment() {
+        val action = HomeFragmentDirections.actionHomeFragmentToHeartDataChartFragment()
+        findNavController().navigate(action)
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
