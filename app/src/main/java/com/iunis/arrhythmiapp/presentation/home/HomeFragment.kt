@@ -9,6 +9,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.firestore.Query
+import com.iunis.arrhythmiapp.data.utils.FirebaseConstants.HEART_DATA_COLLECTION
 import com.iunis.arrhythmiapp.databinding.FragmentHomeBinding
 import com.iunis.arrhythmiapp.domain.model.HeartData
 import com.iunis.arrhythmiapp.util.Resource
@@ -22,6 +27,8 @@ class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels()
     private val heartDataListAdapter: HeartDataListAdapter = HeartDataListAdapter()
+
+    private lateinit var firestoreListener: ListenerRegistration
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +47,7 @@ class HomeFragment : Fragment() {
         initObservers()
 
         getHeartData()
+        confiPrincipalPanel()
     }
 
     private fun initObservers() {
@@ -68,6 +76,41 @@ class HomeFragment : Fragment() {
 
     private fun getHeartData() {
         viewModel.getAllHeartData()
+    }
+
+    private fun confiPrincipalPanel() {
+        val db = FirebaseFirestore.getInstance()
+        val heartDataRef = db.collection(HEART_DATA_COLLECTION).orderBy("fecha", Query.Direction.DESCENDING).limit(1)
+
+        firestoreListener = heartDataRef.addSnapshotListener { snapshots, error ->
+
+            if(error!=null){
+                Toast.makeText(requireContext(),"Error al consultar datos", Toast.LENGTH_SHORT).show()
+                return@addSnapshotListener
+            }
+
+            for(snapshots  in snapshots!!.documentChanges){
+                val heartData = snapshots.document.toObject(HeartData::class.java)
+
+                when(snapshots.type){
+                    DocumentChange.Type.ADDED ->{
+                        binding.sistolica.text = heartData.systolic.toString()
+                        binding.diastolica.text = heartData.diastolic.toString()
+                        binding.pulso.text = heartData.pulse.toString()
+                    }
+                    DocumentChange.Type.MODIFIED ->{
+                        binding.sistolica.text = heartData.systolic.toString()
+                        binding.diastolica.text = heartData.diastolic.toString()
+                        binding.pulso.text = heartData.pulse.toString()
+                    }
+                    DocumentChange.Type.REMOVED ->{
+                        binding.sistolica.text = heartData.systolic.toString()
+                        binding.diastolica.text = heartData.diastolic.toString()
+                        binding.pulso.text = heartData.pulse.toString()
+                    }
+                }
+            }
+        }
     }
 
     private fun initListComponent() {
