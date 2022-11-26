@@ -1,6 +1,7 @@
 package com.iunis.arrhythmiapp.domain.usecase
 
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.iunis.arrhythmiapp.data.utils.FirebaseConstants.HEART_DATA_COLLECTION
 import com.iunis.arrhythmiapp.domain.model.HeartData
 import com.iunis.arrhythmiapp.util.Resource
@@ -13,7 +14,7 @@ class FirebaseGetAllHeartDataRealTimeUseCase @Inject constructor() {
 
     suspend operator fun invoke(): Flow<Resource<List<HeartData>>> = callbackFlow {
 
-        val event = FirebaseFirestore.getInstance().collection(HEART_DATA_COLLECTION)
+        val event = FirebaseFirestore.getInstance().collection(HEART_DATA_COLLECTION).orderBy("fecha", Query.Direction.DESCENDING)
 
         val subscription = event.addSnapshotListener { snapshot, error ->
             if (error != null) {
